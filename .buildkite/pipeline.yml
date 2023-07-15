@@ -1,0 +1,16 @@
+env:
+  PLUGIN_ID: ezoidc/kv
+  IMAGE: ghcr.io/ezoidc/buildkite-plugin-linter
+  TAG: docker
+
+steps:
+  - label: ":sparkles: Lint"
+    command: |
+      args=(
+        "-it"
+        "--rm"
+        "--volume" "\$PWD:/plugin:ro"
+        "--env"    "PLUGIN_ID"
+      )
+
+      docker run "\${args[@]}" \${IMAGE}:"\${TAG}"

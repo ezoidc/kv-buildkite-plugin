@@ -1,0 +1,11 @@
+name: ezoidc-kv
+description: Load ezoidc environment variables
+author: https://github.com/ezoidc
+requirements:
+  - python3
+configuration:
+  properties:
+    org:
+      type: string
+  required:
+    - org
