@@ -1,3 +1,19 @@
 #!/usr/bin/env bash
 
-source <(python3 "${BASH_SOURCE}.py")
+image=ghcr.io/ezoidc/client:latest@sha256:9e21174bb849496f51aacb482f12cce7ad78eea2e5d78e1dce77e554e1c8303b
+args=(
+  -e EZOIDC_TOKEN
+  -e EZOIDC_ORG
+  -e EZOIDC_URL
+  $image variables env
+)
+
+export EZOIDC_ORG="$BUILDKITE_PLUGIN_KV_ORG"
+export EZOIDC_URL="$BUILDKITE_PLUGIN_KV_URL"
+export EZOIDC_TOKEN=$(buildkite-agent oidc request-token --audience "https://oidc.bcj.io/$EZOIDC_ORG" --lifetime 300)
+
+source <(docker run --rm "${args[@]}")
+
+unset EZOIDC_TOKEN
+unset EZOIDC_ORG
+unset EZOIDC_URL

@@ -7,5 +7,7 @@ configuration:
   properties:
     org:
       type: string
+    url:
+      type: string
   required:
     - org
